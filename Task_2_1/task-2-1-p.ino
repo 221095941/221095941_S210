@@ -1,10 +1,16 @@
 #include "Particle.h"
 
+
 SYSTEM_THREAD(ENABLED);
+
+int buttonPin = D3;
+
 
 const pin_t MY_LED = D7;
 
 std::string test_name = "Jack";
+
+String first_name = "Jack";
 
 void morse_dot() {
     digitalWrite(MY_LED, HIGH);
@@ -161,15 +167,15 @@ void morse_code(char c){
         default:
             // Flash to indicate error
             digitalWrite(MY_LED, HIGH);
-            delay(250);
+            delay(10);
             digitalWrite(MY_LED, LOW);
-            delay(250);
+            delay(10);
             digitalWrite(MY_LED, HIGH);
             break;
         
     }
     digitalWrite(MY_LED, LOW);
-    delay(250); // Wait 2 second before next letter
+    delay(250); // Wait
 }
 
 int encode_morse(String s){
@@ -178,50 +184,40 @@ int encode_morse(String s){
     }
     
     digitalWrite(MY_LED, LOW);
-    delay(5000);
+    delay(500);
+    return 1;
+}
+
+int display_word(String s){
+    
+    for (int i = 0; i < s.length(); i++ ){
+            morse_code(s[i]);
+        }
+    
     return 1;
 }
 
 void setup() {
     pinMode(MY_LED, OUTPUT);
+    pinMode( buttonPin , INPUT_PULLUP);
     digitalWrite(MY_LED, LOW);
-	Particle.function("Morse Code Word", encode_morse);
+    
+    // Particle.function("Morse Code Word", encode_morse);
 
 }
 
 void loop() {
-    // Testing
-    /*
-    for (int i = 0; i < test_name.length(); i++ ){
-        morse_code(test_name[i]);
+    
+    int buttonState = digitalRead(buttonPin);
+    
+    // Blocking 
+    if (buttonState == LOW)
+    {
+        display_word(first_name);
     }
     
+    
     digitalWrite(MY_LED, LOW);
-    delay(5000);
-    */
+    
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
