@@ -29,6 +29,7 @@ void loop() {
         Particle.publish(event_light_sensor, data, PRIVATE);
     } else {
         data = "Dark";
+        Particle.publish(event_light_sensor, data, PRIVATE);
     }
     
     // Delay
